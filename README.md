@@ -16,4 +16,40 @@ To maximize compatibility across all architectures, the deployment of Skald is d
     docker compose up --build -d
     ```
 
-## Example Usage
+## Usage
+
+After launching the containers, interaction with Skald is done through the API available at http://localhost:8000/docs. There are two endpoints at the moment: a `consolidate` endpoint, which performs the truth discovery process, and a `clear` endpoint, which clears the database of the reputation system. To send a request to the API, you can use tools such as [Postman](https://www.postman.com).
+
+- A `POST` request to the `consolidate/` has the following format:
+    ```json
+    {
+        "objects": [
+            {
+            "name": "name",
+            "datatype": "string",
+            "claims": [
+                    {
+                    "sourceId": "source1",
+                    "fact": "Thomas A. Anderson"
+                    },
+                    {
+                    "sourceId": "source2",
+                    "fact": "Thomas Anderson"
+                    },
+                    {
+                    "sourceId": "source3",
+                    "fact": "Tommy A. Anderson"
+                    },
+                    {
+                    "sourceId": "source4",
+                    "fact": "Anderson"
+                    }
+                ]
+            }
+        ],
+        "sources": []
+    }
+    ```
+    - The `name` field is used to identify the value
+    - The `datatype` field is used to specify the tyoe of the value (string, continuous, or categorical)
+    - The `claims` list contains a list of values provided by the various sources

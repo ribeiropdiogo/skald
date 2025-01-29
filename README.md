@@ -12,8 +12,8 @@ To maximize compatibility across all architectures, the deployment of Skald is d
 
 - Build the Skald image and launch the containers
 
-```bash
-docker compose up --build -d
-```
+    ```bash
+    docker compose up --build -d
+    ```
 
 ## Example Usage

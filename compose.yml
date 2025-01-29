@@ -1,0 +1,29 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skald
+      MONGO_INITDB_ROOT_PASSWORD: skald
+      MONGO_INITDB_DATABASE: skald
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  api:
+    build:
+      context: .
+    image: skald:latest
+    ports:
+      - 8000:8000
+    container_name: api
+    environment:
+      - DAMPENING=0.8
+      - INFLUENCE=1.0
+      - K=5
+      - LF=1.0
+      - STATEFUL=true
+    depends_on:
+      - mongodb

@@ -57,87 +57,87 @@ After launching the containers, interaction with Skald is done through the API a
 
 - The previous `POST` request returns the following response from *Skald*:
 
-```json
-{
-    "timestamp": "2025-02-04T15:29:22.613023",
-    "objects": [
-        {
-            "name": "name",
-            "claims": [
-                {
-                    "fact": "Thomas A. Anderson",
-                    "confidence": 0.821,
-                    "sourceId": "source1"
-                },
-                {
-                    "fact": "Thomas Anderson",
-                    "confidence": 0.797,
-                    "sourceId": "source2"
-                },
-                {
-                    "fact": "Tommy A. Anderson",
-                    "confidence": 0.786,
-                    "sourceId": "source3"
-                },
-                {
-                    "fact": "Anderson",
-                    "confidence":0.585,
-                    "sourceId": "source4"
-                }
-            ]
-        }
-    ],
-    "sources": [
-        {
-            "sourceId": "source1",
-            "reputation": 0.5833333333333333,
-            "probabilities" :[
-                0.16666666666666666,
-                0.16666666666666666,
-                0.16666666666666666,
-                0.16666666666666666,
-                0.3333333333333333],
-            "ratings": [0,0,0,0,1]
-        },
-        {
-            "sourceId" :"source2",
-            "reputation": 0.5416666666666666,
-            "probabilities": [
-                0.16666666666666666,
-                0.16666666666666666,
-                0.16666666666666666,
-                0.3333333333333333,
-                0.16666666666666666
-            ],
-            "ratings": [0,0,0,1,0]
-        },
-        {
-            "sourceId": "source3",
-            "reputation": 0.5416666666666666,
-            "probabilities": [
-                0.16666666666666666,
-                0.16666666666666666,
-                0.16666666666666666,
-                0.3333333333333333,
-                0.16666666666666666
-            ],
-            "ratings": [0,0,0,1,0]
-        },
-        {
-            "sourceId": "source4",
-            "reputation": 0.5,
-            "probabilities": [
-                0.16666666666666666,
-                0.16666666666666666,
-                0.3333333333333333,
-                0.16666666666666666,
-                0.16666666666666666
-            ],
-            "ratings":[0,0,1,0,0]
-        }
-    ]
-}
-```
+    ```json
+    {
+        "timestamp": "2025-02-04T15:29:22.613023",
+        "objects": [
+            {
+                "name": "name",
+                "claims": [
+                    {
+                        "fact": "Thomas A. Anderson",
+                        "confidence": 0.821,
+                        "sourceId": "source1"
+                    },
+                    {
+                        "fact": "Thomas Anderson",
+                        "confidence": 0.797,
+                        "sourceId": "source2"
+                    },
+                    {
+                        "fact": "Tommy A. Anderson",
+                        "confidence": 0.786,
+                        "sourceId": "source3"
+                    },
+                    {
+                        "fact": "Anderson",
+                        "confidence":0.585,
+                        "sourceId": "source4"
+                    }
+                ]
+            }
+        ],
+        "sources": [
+            {
+                "sourceId": "source1",
+                "reputation": 0.5833333333333333,
+                "probabilities" :[
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.3333333333333333],
+                "ratings": [0,0,0,0,1]
+            },
+            {
+                "sourceId" :"source2",
+                "reputation": 0.5416666666666666,
+                "probabilities": [
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.3333333333333333,
+                    0.16666666666666666
+                ],
+                "ratings": [0,0,0,1,0]
+            },
+            {
+                "sourceId": "source3",
+                "reputation": 0.5416666666666666,
+                "probabilities": [
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.3333333333333333,
+                    0.16666666666666666
+                ],
+                "ratings": [0,0,0,1,0]
+            },
+            {
+                "sourceId": "source4",
+                "reputation": 0.5,
+                "probabilities": [
+                    0.16666666666666666,
+                    0.16666666666666666,
+                    0.3333333333333333,
+                    0.16666666666666666,
+                    0.16666666666666666
+                ],
+                "ratings":[0,0,1,0,0]
+            }
+        ]
+    }
+    ```
     - The response includes two important fields: `objects` and `sources`:
         - The `objects` field includes a list of values order by their respective resulting confidence score in descending order, including information on the confidence score, source, and teh value itself
         - The `sources` field includes information on each participating source's reputation, accumulated ratings, and multinomial probability vector.

@@ -53,4 +53,4 @@ After launching the containers, interaction with Skald is done through the API a
     - The `name` field is used to identify the value
     - The `datatype` field is used to specify the tyoe of the value (string, continuous, or categorical)
     - The `claims` list contains a list of values provided by the various sources
-    - This list is composed by the pair `sourceId` and `fact`, corresponding to the identifier for the source providing the value, and the value itself, respectively.
+        - This list is composed by the pair `sourceId` and `fact`, corresponding to the identifier for the source providing the value, and the value itself, respectively.

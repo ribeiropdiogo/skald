@@ -58,7 +58,7 @@ def sigmoid(x):
                     confidence (float): Confidence score of the fact
     """
     # Avoid negative values (Eq. 8)
-    return 1 / (1 + math.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 class TruthFinder(object):
@@ -114,15 +114,17 @@ class TruthFinder(object):
                         df (datafram): Dataframe with new confidence scores
         """
         # Trustworthiness score of source (Eq. 3)
-        trustworthiness_score = lambda x: - math.log(1 - x)
-        # Calculate confidence for each fact
-        for i, row in df.iterrows():
-            # Get the trustworthiness score of each source providing f
-            ts = df.loc[df["fact"] == row["fact"], "trustworthiness"]
-            # Sum the trustworthiness score of each source providing f (Eq. 5)
-            confidence_score = sum(trustworthiness_score(t) for t in ts)
-            # Set the calculate confidence for the fact
-            df.at[i, "fact_confidence"] = confidence_score
+        trustworthiness_score = lambda x: - np.log(1 - x)
+        # Calculate the trustworthiness score for each source
+        df["ts_score"] = trustworthiness_score(df["trustworthiness"].values)
+        # Sum the trustworthiness score of each source providing facts
+        confidence_df = df.groupby("fact")["ts_score"].sum().reset_index()
+        # Merge the confidence scores with the original dataframe
+        df = df.merge(confidence_df.rename(columns={"ts_score": "fact_confidence"}), on="fact", how="left")
+        df = df.drop(columns=["fact_confidence_x"])
+        df = df.rename(columns={"fact_confidence_y": "fact_confidence"})
+
+
         # Return the data
         return df
 
@@ -185,10 +187,7 @@ class TruthFinder(object):
         """
         # Calculate the confidence of f (Eq. 8)
         s = lambda x: sigmoid(self.dampening_factor * x)
-        # Iterate through facts
-        for i, row in df.iterrows():
-            # Calculate and update confidence of the fact
-            df.at[i, "fact_confidence"] = s(row["fact_confidence"])
+        df["fact_confidence"] = s(df["fact_confidence"].values)
         # Return the data
         return df
 
@@ -258,7 +257,7 @@ class TruthFinder(object):
         # Update the fact confidence
         df = self.update_fact_confidence(df)
         # Update the source trustworthiness
-        df = self.update_source_trustworthiness(df)
+        # df = self.update_source_trustworthiness(df)
         # Return the data
         return df
 
@@ -295,23 +294,7 @@ class TruthFinder(object):
         """
         # Initialize fact_confidence
         dataframe["fact_confidence"] = np.zeros(len(dataframe.index))
-        # Loop until max_iterations
-        #for i in range(max_iterations):
-            # Remove duplicates for sources and get trustworthiness for each
-            #t1 = dataframe.drop_duplicates("source")["trustworthiness"]
         # Perform an iteration
         dataframe = self.iteration(dataframe)
-            # Remove duplicates for sources and get trustworthiness for each
-            #t2 = dataframe.drop_duplicates("source")["trustworthiness"]
-            #try:
-                # Calculate cosine similarity
-            #    change = self.calculate_change(t1, t2)
-                # Check if difference is below threshold
-            #    if change < threshold:
-                    # Exit loop and return data
-            #        return dataframe
-            #except Exception as e:
-            #    print(e)
-            #    print(dataframe)
         # Return data
         return dataframe

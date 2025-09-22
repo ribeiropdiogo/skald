@@ -7,6 +7,7 @@ modules in the underlying model.
 import logging
 import threading
 import pandas as pd
+
 from fastapi import HTTPException
 
 from src.consolidation import truthfinderV2

@@ -20,10 +20,97 @@ services:
       - 8000:8000
     container_name: api
     environment:
-      - DAMPENING=0.8
+      - DAMPENING=0.3
       - INFLUENCE=1.0
       - K=5
       - LF=1.0
       - STATEFUL=true
     depends_on:
       - mongodb
+
+  mongodb-gender:
+    image: mongo:latest
+    container_name: mongodb-gender
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skald
+      MONGO_INITDB_ROOT_PASSWORD: skald
+      MONGO_INITDB_DATABASE: skald
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  api-gender:
+    build:
+      context: .
+    image: skald:latest
+    ports:
+      - 8001:8000
+    container_name: api-gender
+    environment:
+      - DAMPENING=0.3
+      - INFLUENCE=1.0
+      - K=10
+      - LF=1.0
+      - STATEFUL=true
+    depends_on:
+      - mongodb-gender
+  
+  mongodb-adult:
+    image: mongo:latest
+    container_name: mongodb-adult
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skald
+      MONGO_INITDB_ROOT_PASSWORD: skald
+      MONGO_INITDB_DATABASE: skald
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  api-adult:
+    build:
+      context: .
+    image: skald:latest
+    ports:
+      - 8002:8000
+    container_name: api-adult
+    environment:
+      - DAMPENING=0.3
+      - INFLUENCE=1.0
+      - K=10
+      - LF=1.0
+      - STATEFUL=true
+    depends_on:
+      - mongodb-adult
+  
+  mongodb-diabetes:
+    image: mongo:latest
+    container_name: mongodb-diabetes
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skald
+      MONGO_INITDB_ROOT_PASSWORD: skald
+      MONGO_INITDB_DATABASE: skald
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  api-diabetes:
+    build:
+      context: .
+    image: skald:latest
+    ports:
+      - 8003:8000
+    container_name: api-diabetes
+    environment:
+      - DAMPENING=0.3
+      - INFLUENCE=1.0
+      - K=10
+      - LF=1.0
+      - STATEFUL=true
+    depends_on:
+      - mongodb-diabetes

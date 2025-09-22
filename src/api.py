@@ -102,7 +102,7 @@ class ConsolidatedClaim(BaseModel):
         identifier of the source
     """
 
-    fact: float | int | bool | str
+    fact: float | int | str | bool
     confidence: float
     sourceId: str | None
 

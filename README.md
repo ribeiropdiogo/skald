@@ -1,6 +1,6 @@
-# Skald: Improving Truth Discovery By Tracking Reputation
+# Skald
 
-Traditional truth discovery approach estimate the truth from a set of values provided by multiple sources, which can be conflicting and heteregoneous. This repository contains **Skald**, a proof-of-concept of a solution that improves truth discovery with the addition of a reputation system. The architecture of Skald can be found in the Figure below, while a detailed explanation of the solution is present in the accompanying paper (To Be Published).
+Traditional truth discovery approach estimate the truth from a set of values provided by multiple sources, which can be conflicting and heteregoneous. This repository contains **Skald**, a proof-of-concept of a solution that improves truth discovery with the addition of a reputation system.
 
 ## Getting Started
 

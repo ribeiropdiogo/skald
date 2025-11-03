@@ -349,10 +349,11 @@ class Skald:
                     by=['fact_confidence'], ascending=False)
                 # Add facts to structure
                 for _, row in dataframe.iterrows():
+                    # Append fact to response
                     response['claims'].append({
                         "fact": float(row['fact']) if row['datatype'] == 'continuous'\
-                              else bool(row['fact']) if row['datatype'] == 'boolean'\
-                              else row['fact'],
+                            else bool(row['fact']) if row['datatype'] == 'boolean'\
+                            else row['fact'],
                         "confidence": round(row['fact_confidence'], 3),
                         "sourceId": row['source']
                     })
@@ -431,6 +432,8 @@ class Skald:
         except Exception as e:
             # Log error
             logging.error('Error building dataframe: %s', e)
+            return []
+
 
     def consolidate(self, claims, sources):
         """

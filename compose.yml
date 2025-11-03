@@ -25,6 +25,7 @@ services:
       - K=5
       - LF=1.0
       - STATEFUL=true
+      - MONGODB_PORT=27017
     depends_on:
       - mongodb
 
@@ -37,7 +38,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: skald
       MONGO_INITDB_DATABASE: skald
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
@@ -54,6 +55,7 @@ services:
       - K=10
       - LF=1.0
       - STATEFUL=true
+      - MONGODB_PORT=27018
     depends_on:
       - mongodb-gender
   
@@ -66,7 +68,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: skald
       MONGO_INITDB_DATABASE: skald
     ports:
-      - "27017:27017"
+      - "27019:27017"
     volumes:
       - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
@@ -83,6 +85,7 @@ services:
       - K=10
       - LF=1.0
       - STATEFUL=true
+      - MONGODB_PORT=27019
     depends_on:
       - mongodb-adult
   
@@ -95,7 +98,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: skald
       MONGO_INITDB_DATABASE: skald
     ports:
-      - "27017:27017"
+      - "27020:27017"
     volumes:
       - ./src/reputation/storage/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
@@ -112,5 +115,6 @@ services:
       - K=10
       - LF=1.0
       - STATEFUL=true
+      - MONGODB_PORT=27020
     depends_on:
       - mongodb-diabetes

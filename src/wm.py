@@ -4,6 +4,7 @@ the distribution of requests among various workers.
 """
 
 import logging
+import json
 import threading
 import random
 import os
@@ -205,6 +206,12 @@ class WorkloadManager:
             logging.info(
                 "%s - Workload Manager: workload executed", threading.get_ident()
             )
+            try:
+                json.dumps(response)
+            except ValueError as e:
+                logging.error("JSON serialization failed: %s", e)
+                logging.error("Offending response: %s", response)
+                raise
             # Return the result
             return response
         # Catch any exception

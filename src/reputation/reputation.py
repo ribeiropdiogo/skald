@@ -6,6 +6,7 @@ source reputations over time .
 
 import logging
 import numpy as np
+import os
 
 from pymongo import MongoClient
 
@@ -34,9 +35,15 @@ class Reputation:
         Updates the reputation for a given source.
     """
     def __init__(self, k, c, lf, stateful):
+        # Read env vars
+        mongo_host = os.getenv("MONGODB_HOST", "localhost")
+        mongo_port = int(os.getenv("MONGODB_PORT", 27017))
+        mongo_user = os.getenv("MONGODB_USER", "skald")
+        mongo_pass = os.getenv("MONGODB_PASS", "skald")
+        mongo_db   = os.getenv("MONGODB_DB", "skald")
         # Initialize MongoDB connector
-        client = MongoClient(host='mongodb', port=27017, username='skald', password='skald')
-        self.db = client.skald
+        client = MongoClient(host=mongo_host, port=mongo_port, username=mongo_user, password=mongo_pass)
+        self.db = client[mongo_db]
         # instantiate variables
         self.k = k
         self.C = c
